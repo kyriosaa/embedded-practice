@@ -17,8 +17,13 @@ void triggerUltrasonicSensor()
 
 double getUltrasonicDistance()
 {
+    unsigned long timeBegin = millis(); // activity 14
     double durationMicros = pulseIn(ECHO, HIGH);
-    double distance = durationMicros / 58.0; // 58.0 for cm, 148.0 for inches
+    unsigned long timeEnd = millis();                 // activity 14
+    unsigned long codeDuration = timeEnd - timeBegin; // activity 14
+    Serial.print("Duration");                         // activity 14
+    Serial.println(codeDuration);                     // activity 14
+    double distance = durationMicros / 58.0;          // 58.0 for cm, 148.0 for inches
     return distance;
 }
 
