@@ -17,16 +17,22 @@
 
 LiquidCrystal_I2C lcd(LCD_ADDRESS, 16, 2);
 
+int counter = 0;
+
 void setup() {
   lcd.init();
   lcd.backlight();
   lcd.clear();
-  lcd.setCursor(4, 0);
-  lcd.print("Hello World!");
+
+  lcd.setCursor(0, 0);
+  lcd.print("Counter: ");
 
 }
 
 void loop() {
-  // put your main code here, to run repeatedly:
+  lcd.setCursor(8, 0);
+  lcd.print(counter);
+  counter++;
+  delay(500);
 
 }
