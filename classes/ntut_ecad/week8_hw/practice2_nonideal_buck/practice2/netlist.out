@@ -1,0 +1,196 @@
+***************************************************************************************************************
+***                                                                                                         ***
+*** Elements Version 9.20g (x64) - 26/10/2025 20:10                                                         ***
+*** Platform: Windows 10                                                                                    ***
+*** Architecture: x64                                                                                       ***
+*** Serial Number:                                                                                          ***
+*** User:                                                                                                   ***
+***                                                                                                         ***
+*** TITLE:   NMOS test 2                                                                                   ***
+*** NETLIST: F:\engineering\practice\embedded\classes\ntut_ecad\week8_hw\practice2_nonideal_buck\netlist.net***
+***                                                                                                         ***
+***************************************************************************************************************
+
+********************************************************************************
+***                                                                          ***
+***                                Input Deck                                ***
+***                                                                          ***
+********************************************************************************
+
+.options bjtPSpiceSubNode=1
+.options allowdivzero=1
+.options initCondMode=2
+.options icres=0.002
+.options inhibitAttoISource=1
+#SIMETRIX
+V1 V1_P 0 10
+V2 R2_P 0 {v2dc} AC 1 0
+R1 R1_P V1_P 1K
+R2 R2_P R2_N 100
+X$Q1 0 R1_P R2_N GaN_PSpice_GS66516T_L1V4P1
+.AC PARAM=v2dc LIN 10 1u 10 F=0
+*.DC V2 0 1k 5
+.options optimise=0
+.subckt GaN_PSpice_GS66516T_L1V4P1 gatein drainin sourcein
+*
+*
+.param rTC=-0.004  gan_res={22.4e-3}		metal_res={2.0e-3}   gtc=2.85 sh_s = 0.05263   sh_d = 0.94376
+.param  cur=.105   x0_0=1.1	  x0_1=1.1  x0_2=1.0  thr = 1.61  itc=0.798 atc=174.1
+*
+*
+rd drainin drain { sh_d* (metal_res/2.0*(1-1*rTc*(Temp-25)) + gan_res*PWR((Temp+273)/298,gtc)) }
+rs sourcein source { sh_s * (metal_res/2.0*(1-1*rTc*(Temp-25)) + gan_res*PWR((Temp+273)/298,gtc)) }
+rg gatein gate {0.5}
+*
+*
+Rcsdconv drain source {4000Meg}
+Rcgsconv gate source {4000Meg}
+Rcgdconv gate drain {4000Meg}
+*
+*
+gswitch drain2 source2 value { (if(v(drain2,source2)>0,
++   (cur*(-(Temp-25)*itc+atc)*log(1.0+exp(26*(v(gate,source2)-thr)))*
++	v(drain2,source2)/(1 + max(x0_0+x0_1*(v(gate,source2)+x0_2),0.2)*v(drain2,source2))),
++   (-cur*(-(Temp-25)*itc+atc)*log(1.0+exp(26*(v(gate,drain2)-thr)))*
++	v(source2, drain2)/(1 + max(x0_0+x0_1*(v(gate,drain2)+x0_2),0.2)*v(source2,drain2))))) }
+*
+*
+R_drain2 drain2 drain {(1e-4)}
+R_source2 source2 source {(1e-4)}
+*
+*
+C_GS1	gate source		{372.3e-12}
+E_IGS1	tl_gs1 bl_gs1	Value = { ( - 57.24e-12*(1-1./(1+exp(0.477*(-v(drain, source)+3.0))))
++                       	- 81.74e-12*(1-1./(1+exp(0.067*(-v(drain, source)+32.3))))
++                         	- 5.0e-12*(1-1./(1+exp(0.5*(-v(drain, source)+60.3))))
++                        	- 2.124e-12*(1-1./(1+exp(0.0177*(-v(drain, source)+600.03))))
++					 		- 5.19e-11*(-1+1./(1+exp(0.06*(-v(drain, source)+0.0))))
++				     		- 0.88e-10*(-1+1./(1+exp(0.4*(-v(drain, source)+0.4))))
++    				 		- 0.54e-11*(-1+1./(1+exp(0.2*(-v(drain, source)+35.1))))
++    				 		- 0.96e-11*(-1+1./(1+exp(0.0001*(-v(drain, source)+70.1)))) )*v(gate,source) }
+V_INGS1 br_gs1 bl_gs1 	{0.0}
+C_IGS1  br_gs1 tr_gs1 	{1.0e-6}
+R_IGS1  tr_gs1 tl_gs1 	{1e-3}
+F_IGS1  gate source 	V_INGS1 {1.0e6}
+R_IGS12 bl_gs1 source 	{100Meg}
+*
+*
+E_IGS2	tl_gs2 bl_gs2 	Value ={ ( 1.43e-010*log(1+exp(0.1*(v(gate,source)-0.5)))
++				      		+ 1.73e-010*log(1+exp(7.5*(v(gate,source)-1.55)))
++			          		- 2.03e-10*log(1+exp(0.7*(-v(gate,source)+4))) ) }
+V_INGS2 br_gs2 bl_gs2 	{0.0}
+C_IGS2  br_gs2 tr_gs2 	{1.0e-6}
+R_IGS2  tr_gs2 tl_gs2 	{1e-3}
+F_IGS2  gate source 	V_INGS2 {1.0e6}
+R_IGS22 bl_gs2 source 	{100Meg}
+*
+*
+C_GD    gate drain  	{3.6e-012}
+E_IGD	tl_gd bl_gd		Value ={ ( 1.2e-10*log(1+exp(0.477*(v(gate, drain)+3)))
++					 		+ 15.2e-10*log(1+exp(0.0670*(v(gate, drain)+32.3)))
++					  		+ 0.1e-10*log(1+exp(0.50*(v(gate, drain)+20.3)))
++					  		+ 1.2e-10*log(1+exp(0.0177*(v(gate, drain)+600.03))) ) }
+V_INGD 	br_gd bl_gd 	{0.0}
+C_IGD  	br_gd tr_gd 	{1.0e-6}
+R_IGD  	tr_gd tl_gd 	{1e-3}
+F_IGD  	gate drain 		V_INGD {1.0e6}
+R_IGD2 	bl_gd drain 	{100Meg}
+*
+*
+C_SD	source drain  	{1.23e-010}
+E_ISD	tl_sd bl_sd		Value = { ( 3e-10*log(1+exp(.3*(v(source,drain)+0.01)))
++							+ 5.31e-09*log(1+exp(.14*(v(source,drain)+66)))
++							+ 2.79e-9*log(1+exp(.06*(v(source,drain)+190)))
++							+ 8.66e-10*log(1+exp(.041*(v(source,drain)+300))) ) }
+V_INSD 	br_sd bl_sd 	{0.0}
+C_ISD  	br_sd tr_sd 	{1.0e-6}
+R_ISD  	tr_sd tl_sd 	{1e-3}
+F_ISD  	source drain	V_INSD {1.0e6}
+R_ISD2 	bl_sd drain {100Meg}
+*
+*
+.ends
+*$
+
+********************************************************************************
+***                                                                          ***
+*** Starting AC analysis at 20:10                                            ***
+***                                                                          ***
+*** Analysis card: .AC PARAM=v2dc LIN 10 1u 10 F=0                           ***
+***                                                                          ***
+********************************************************************************
+********************************************************************************
+***                                                                          ***
+***                            Simulation Options                            ***
+***                                                                          ***
+********************************************************************************
+RELTOL                    0.001
+ABSTOL                    1e-12
+VNTOL                     1e-06
+POINTTOL                  0.001
+TEMPERATURE               27C
+GMIN                      1e-12
+Matrix Solver             UF KLU Version 1.1
+
+
+
+********************************************************************************
+***                                                                          ***
+***                             Device parameters                            ***
+***                                                                          ***
+********************************************************************************
+Instance parameters for devices of type Vsource
+===============================================
+Instance:    V2           
+Using model: $Vsource     
+
+dc           1u           
+
+
+Instance parameters for devices of type Resistor
+================================================
+Instance:    Q1.rd        Q1.rs        
+Using model: $Resistor    $Resistor    
+
+resistance   22.49840913m 1.254652955m 
+
+
+Analysis statistics
+===================
+
+Nominal temperature = 27
+Operating temperature = 27
+Total iterations = 22
+Transient iterations = 0
+Transient timepoints = 0
+Accepted timepoints = 0
+Total analysis time = 0.016
+Transient time = 0
+Matrix reordering time = 0
+L-U decomposition time = 0
+Matrix solve time = 0
+Load time = 0
+Transient L-U decomp time = 0
+Transient solve time = 0
+Circuit build time = 0.016
+Simulator initialise time = 0
+Data write time = 0
+Convergence test time = 0
+LTE time = 0
+JI2 Iterations = 22
+Diag. GMIN stepping iterations = 0
+Junc. GMIN stepping iterations = 0
+Source stepping iterations = 0
+PTA iterations = 0
+Number of matrix fill ins = 55
+Number of initial matrix elements = 124
+Circuit equations = 36
+State vector size = 62
+Number of write buffer faults = 0
+
+Run statistics
+==============
+
+Netlist read in time = 0
+Total run time = 0.047 seconds
+Analysis concluded 26/10/2025 20:10

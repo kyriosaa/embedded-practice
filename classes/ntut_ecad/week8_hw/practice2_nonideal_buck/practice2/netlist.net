@@ -1,0 +1,17 @@
+NMOS test 2
+*#SIMETRIX
+V1 V1_P 0 10
+V2 R2_P 0 {v2dc} AC 1 0
+R1 R1_P V1_P 1K
+R2 R2_P R2_N 100
+X$Q1 0 R1_P R2_N GaN_PSpice_GS66516T_L1V4P1
+.AC PARAM=v2dc LIN 10 1u 10 F=0
+*.DC V2 0 1k 5
+.options optimise=0
+
+
+
+
+
+
+

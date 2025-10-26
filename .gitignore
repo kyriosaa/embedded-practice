@@ -1,2 +1,17 @@
 .vscode
 desktop.ini
+
+# temp folders
+TMP/
+**/TMP/
+
+# simplis
+SIMPLIS_Data/
+**/SIMPLIS_Data/
+
+# excel
+*.xlsx
+
+# spice models
+GS66508T-Spice-Models-V4P1/
+GS66516T-Spice-Models-V4P1/

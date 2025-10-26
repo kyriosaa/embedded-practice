@@ -1,0 +1,185 @@
+**************************************************************************************
+***                                                                                ***
+*** Elements Version 9.20g (x64) - 26/10/2025 20:41                                ***
+*** Platform: Windows 10                                                           ***
+*** Architecture: x64                                                              ***
+*** Serial Number:                                                                 ***
+*** User:                                                                          ***
+***                                                                                ***
+*** TITLE:   NMOS test 2                                                          ***
+*** NETLIST: C:\Users\kyrio\OneDrive\Desktop\1023_Simulation\Practice 2\netlist.net***
+***                                                                                ***
+**************************************************************************************
+
+********************************************************************************
+***                                                                          ***
+***                                Input Deck                                ***
+***                                                                          ***
+********************************************************************************
+
+.options bjtPSpiceSubNode=1
+.options allowdivzero=1
+.options initCondMode=2
+.options icres=0.002
+.options inhibitAttoISource=1
+#SIMETRIX
+V1 V1_P 0 10
+V2 R2_P 0 {v2dc} AC 1 0
+R1 R1_P V1_P 1K
+R2 R2_P R2_N 100
+X$Q1 0 R1_P R2_N GaN_PSpice_GS66508T_L1V4P1
+.AC PARAM=v2dc LIN 10 1u 10 F=0
+*.DC V2 0 1k 5
+.options optimise=0
+.subckt GaN_PSpice_GS66508T_L1V4P1 gatein drainin sourcein
+*
+*
+.param rTC=-0.004  gan_res={45.8e-3}		metal_res={3.2e-3}   gtc=2.8 sh_s = 0.05263   sh_d = 0.94376
+.param  cur=.099   x0_0=1.1	  x0_1=1.1  x0_2=1.0  thr = 1.61  itc=0.391 atc=90.8
+*
+*
+rd drainin drain { sh_d * (metal_res/2.0 * (1-1*rTc*(Temp-25)) + gan_res*PWR((Temp+273)/298,gtc)) }
+rs sourcein source { sh_s * (metal_res/2.0 * (1-1*rTc*(Temp-25)) + gan_res*PWR((Temp+273)/298,gtc)) }
+rg gatein gate {1.0}
+*
+*
+Rcsdconv drain source {4000Meg}
+Rcgsconv gate source {4000Meg}
+Rcgdconv gate drain {4000Meg}
+*
+*
+gswitch drain2 source2 value { (if(v(drain2,source2)>0,
++   (cur*(-(Temp-25)*itc+atc)*log(1.0+exp(26*(v(gate,source2)-thr)))*
++	v(drain2,source2)/(1 + max(x0_0+x0_1*(v(gate,source2)+x0_2),0.2)*v(drain2,source2))),
++   (-cur*(-(Temp-25)*itc+atc)*log(1.0+exp(26*(v(gate,drain2)-thr)))*
++	v(source2, drain2)/(1 + max(x0_0+x0_1*(v(gate,drain2)+x0_2),0.2)*v(source2,drain2))))) }
+*
+*
+R_drain2 drain2 drain {(1e-4)}
+R_source2 source2 source {(1e-4)}
+*
+*
+C_GS1	 gate source  	{228.3e-12}
+E_IGS1	 tl_gs1 bl_gs1 	Value ={ ( -0.9431e-12*(1-1./(1+exp(0.0177*(-v(drain, source)+300.03))))
++						  -0.4182e-10*(1-1./(1+exp(0.0700*(-v(drain, source)+33.3))))
++						 -0.5657e-10*(1-1./(1+exp(0.277*(-v(drain, source)+1.1))))
++						-(-0.435*90.48e-12*(1-1./(1+exp(0.06*(-v(drain, source)+1.1))))
++                        -0.435*0.54e-10*(1-1./(1+exp(0.9*(-v(drain, source)+2.1))))))*v(gate,source) }
+V_INGS1 br_gs1 bl_gs1 	{0.0}
+C_IGS1  br_gs1 tr_gs1 	{1.0e-6}
+R_IGS1  tr_gs1 tl_gs1 	{1e-3}
+F_IGS1  gate source 	V_INGS1 {1.0e6}
+R_IGS12 bl_gs1 source 	{100Meg}
+*
+*
+E_IGS2	tl_gs2 bl_gs2 	Value ={ 0.464*2.23e-010*log(1+exp(6.5*(v(gate,source)-1.45))) }
+V_INGS2 br_gs2 bl_gs2 	{0.0}
+C_IGS2  br_gs2 tr_gs2 	{1.0e-6}
+R_IGS2  tr_gs2 tl_gs2 	{1e-3}
+F_IGS2  gate source 	V_INGS2 {1.0e6}
+R_IGS22 bl_gs2 source 	{100Meg}
+*
+*
+C_GD   gate drain  	{0.6e-012}
+E_IGD	tl_gd bl_gd		Value ={ 0.444*4.6e-10*log(1+exp(0.277*(v(gate, drain)+1.1))) + 0.444*13.2e-10*log(1+exp(0.070*(v(gate, drain)+33.3)))+ 0.444*1.2e-10*log(1+exp(0.0177*(v(gate, drain)+300.03))) }
+V_INGD br_gd bl_gd 	{0.0}
+C_IGD  br_gd tr_gd 	{1.0e-6}
+R_IGD  tr_gd tl_gd 	{1e-3}
+F_IGD  gate drain 	V_INGD {1.0e6}
+R_IGD2 bl_gd drain 	{100Meg}
+*
+*
+C_SD	 source drain  	{0.8e-010}
+E_ISD	tl_sd bl_sd		Value={  0.444*3.6e-9*log(1+exp(.15*(v(source,drain)+68))) + 0.444*6.56e-9*log(1+exp(.03*(v(source,drain)+180))) +  2.64e-10*(1-1.0/(1+exp(0.077*(v(source,drain)+4.3)))) }
+V_INSD br_sd bl_sd 	{0.0}
+C_ISD  br_sd tr_sd 	{1.0e-6}
+R_ISD  tr_sd tl_sd 	{1e-3}
+F_ISD  source drain	V_INSD {1.0e6}
+R_ISD2 bl_sd drain {100Meg}
+*
+*
+.ends
+*$
+
+********************************************************************************
+***                                                                          ***
+*** Starting AC analysis at 20:41                                            ***
+***                                                                          ***
+*** Analysis card: .AC PARAM=v2dc LIN 10 1u 10 F=0                           ***
+***                                                                          ***
+********************************************************************************
+********************************************************************************
+***                                                                          ***
+***                            Simulation Options                            ***
+***                                                                          ***
+********************************************************************************
+RELTOL                    0.001
+ABSTOL                    1e-12
+VNTOL                     1e-06
+POINTTOL                  0.001
+TEMPERATURE               27C
+GMIN                      1e-12
+Matrix Solver             UF KLU Version 1.1
+
+
+
+********************************************************************************
+***                                                                          ***
+***                             Device parameters                            ***
+***                                                                          ***
+********************************************************************************
+Instance parameters for devices of type Vsource
+===============================================
+Instance:    V2           
+Using model: $Vsource     
+
+dc           1u           
+
+
+Instance parameters for devices of type Resistor
+================================================
+Instance:    Q1.rd        Q1.rs        
+Using model: $Resistor    $Resistor    
+
+resistance   45.56348621m 2.540906882m 
+
+
+Analysis statistics
+===================
+
+Nominal temperature = 27
+Operating temperature = 27
+Total iterations = 22
+Transient iterations = 0
+Transient timepoints = 0
+Accepted timepoints = 0
+Total analysis time = 0.015
+Transient time = 0
+Matrix reordering time = 0
+L-U decomposition time = 0
+Matrix solve time = 0
+Load time = 0
+Transient L-U decomp time = 0
+Transient solve time = 0
+Circuit build time = 0.016
+Simulator initialise time = 0
+Data write time = 0
+Convergence test time = 0
+LTE time = 0
+JI2 Iterations = 22
+Diag. GMIN stepping iterations = 0
+Junc. GMIN stepping iterations = 0
+Source stepping iterations = 0
+PTA iterations = 0
+Number of matrix fill ins = 55
+Number of initial matrix elements = 124
+Circuit equations = 36
+State vector size = 62
+Number of write buffer faults = 0
+
+Run statistics
+==============
+
+Netlist read in time = 0.015
+Total run time = 0.046 seconds
+Analysis concluded 26/10/2025 20:41

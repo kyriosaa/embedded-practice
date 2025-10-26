@@ -1,0 +1,215 @@
+**********************************************************************************************************************
+***                                                                                                                ***
+*** Elements Version 9.20g (x64) - 26/10/2025 20:28                                                                ***
+*** Platform: Windows 10                                                                                           ***
+*** Architecture: x64                                                                                              ***
+*** Serial Number:                                                                                                 ***
+*** User:                                                                                                          ***
+***                                                                                                                ***
+*** TITLE:   * F:\engineering\practice\embedded\classes\ntut_ecad\week8_hw\practice2_nonideal_buck\practice2.wxsch***
+*** NETLIST: F:\engineering\practice\embedded\classes\ntut_ecad\week8_hw\practice2_nonideal_buck\design.net        ***
+***                                                                                                                ***
+**********************************************************************************************************************
+
+********************************************************************************
+***                                                                          ***
+***                                Input Deck                                ***
+***                                                                          ***
+********************************************************************************
+
+.options bjtPSpiceSubNode=1
+.options allowdivzero=1
+.options initCondMode=2
+.options icres=0.002
+.options inhibitAttoISource=1
+#SIMETRIX
+X$V2 V2_P U1_sourcein PUL_SOURCE pinnames: P N params: _V1=-3 _V2=6 _FREQ=100k _DELAY=0 _DRATIOx100=50 _T_RISE=10n _T_FALL=10n _DAMP_COEF=0 _PWIDTH=4.99u _OFF_UNTIL_DELAY=0 _IDLE_IN_POP=0 _USEPHASE=0 _PHASE=0 _SHOWPARAMS=0
+X$U1 V2_P V1_P U1_sourcein GaN_PSpice_GS66516T_L1V4P1 pinnames: gatein drainin sourcein
+V1 V1_P 0 18
+R3 R3_P R3_N 56.18m
+.GRAPH R1_P axisType="grid" axisName="Vo" persistence=-1 graphName="Output" curveLabel="Vo" analysis="tran|ac|dc" xLog="auto" yLog="auto"  nowarn=true GUID="5f289d05-c8b5-4ee7-a5ff-6f6b4a657afc" disabled=false PROBEREF=Probe1  
+R1 R1_P 0 833.33m
+.GRAPH "V(L1_P)-V(R3_P)" axisType="grid" axisName="VL" persistence=-1 graphName="Inductance" curveLabel="VL" analysis="tran|ac|dc" xLog="auto" yLog="auto"  nowarn=true GUID="6c177d60-27ce-4e66-928a-4636c5c110b6" disabled=false 
+L1 L1_P R3_P 32u   
+V$IPROBE2 U1_sourcein L1_P 0.0 
+.GRAPH IPROBE2#p axisType="grid" axisName="iL" persistence=-1 graphName="Inductance" curveLabel="iL" analysis="tran|ac|dc" xLog="auto" yLog="lin"  nowarn=true GUID="4b3074c9-05b7-4b2e-b343-755be34db601" disabled=false 
+V$IPROBE1 R3_P R1_P 0.0 
+.GRAPH IPROBE1#p axisType="grid" axisName="io" persistence=-1 graphName="Output" curveLabel="io" analysis="tran|ac|dc" xLog="auto" yLog="lin"  nowarn=true GUID="9022a32b-b0a1-473b-a924-928d282308a9" disabled=false 
+D1 0 U1_sourcein IDEAL
+C1 R3_N 0 1.117m   
+.tran 100m
+.SUBCKT PUL_SOURCE 1 2 params: _V1=0 _V2=1 _FREQ=100k _DELAY=0 _T_RISE=0 _T_FALL=0 _PWIDTH=5u _OFF_UNTIL_DELAY=0 _IDLE_IN_POP=0 _USEPHASE=0 _PHASE=0
+V1 1 2 PWLS PUL
++ V1={_V1} 
++ V2={_V2} 
++ FREQ={_FREQ} 
++ RISE={_T_RISE} 
++ FALL={_T_FALL} 
++ WIDTH={_PWIDTH} 
++ DELAY={IFF(_USEPHASE, _PHASE/360/_FREQ, _DELAY)} 
++ OFF_UNTIL_DELAY={_OFF_UNTIL_DELAY} 
++ END
+.ENDS
+.model IDEAL D (IS=1p)
+.subckt GaN_PSpice_GS66516T_L1V4P1 gatein drainin sourcein
+*
+*
+.param rTC=-0.004  gan_res={22.4e-3}		metal_res={2.0e-3}   gtc=2.85 sh_s = 0.05263   sh_d = 0.94376
+.param  cur=.105   x0_0=1.1	  x0_1=1.1  x0_2=1.0  thr = 1.61  itc=0.798 atc=174.1
+*
+*
+rd drainin drain { sh_d* (metal_res/2.0*(1-1*rTc*(Temp-25)) + gan_res*PWR((Temp+273)/298,gtc)) }
+rs sourcein source { sh_s * (metal_res/2.0*(1-1*rTc*(Temp-25)) + gan_res*PWR((Temp+273)/298,gtc)) }
+rg gatein gate {0.5}
+*
+*
+Rcsdconv drain source {4000Meg}
+Rcgsconv gate source {4000Meg}
+Rcgdconv gate drain {4000Meg}
+*
+*
+gswitch drain2 source2 value { (if(v(drain2,source2)>0,
++   (cur*(-(Temp-25)*itc+atc)*log(1.0+exp(26*(v(gate,source2)-thr)))*
++	v(drain2,source2)/(1 + max(x0_0+x0_1*(v(gate,source2)+x0_2),0.2)*v(drain2,source2))),
++   (-cur*(-(Temp-25)*itc+atc)*log(1.0+exp(26*(v(gate,drain2)-thr)))*
++	v(source2, drain2)/(1 + max(x0_0+x0_1*(v(gate,drain2)+x0_2),0.2)*v(source2,drain2))))) }
+*
+*
+R_drain2 drain2 drain {(1e-4)}
+R_source2 source2 source {(1e-4)}
+*
+*
+C_GS1	gate source		{372.3e-12}
+E_IGS1	tl_gs1 bl_gs1	Value = { ( - 57.24e-12*(1-1./(1+exp(0.477*(-v(drain, source)+3.0))))
++                       	- 81.74e-12*(1-1./(1+exp(0.067*(-v(drain, source)+32.3))))
++                         	- 5.0e-12*(1-1./(1+exp(0.5*(-v(drain, source)+60.3))))
++                        	- 2.124e-12*(1-1./(1+exp(0.0177*(-v(drain, source)+600.03))))
++					 		- 5.19e-11*(-1+1./(1+exp(0.06*(-v(drain, source)+0.0))))
++				     		- 0.88e-10*(-1+1./(1+exp(0.4*(-v(drain, source)+0.4))))
++    				 		- 0.54e-11*(-1+1./(1+exp(0.2*(-v(drain, source)+35.1))))
++    				 		- 0.96e-11*(-1+1./(1+exp(0.0001*(-v(drain, source)+70.1)))) )*v(gate,source) }
+V_INGS1 br_gs1 bl_gs1 	{0.0}
+C_IGS1  br_gs1 tr_gs1 	{1.0e-6}
+R_IGS1  tr_gs1 tl_gs1 	{1e-3}
+F_IGS1  gate source 	V_INGS1 {1.0e6}
+R_IGS12 bl_gs1 source 	{100Meg}
+*
+*
+E_IGS2	tl_gs2 bl_gs2 	Value ={ ( 1.43e-010*log(1+exp(0.1*(v(gate,source)-0.5)))
++				      		+ 1.73e-010*log(1+exp(7.5*(v(gate,source)-1.55)))
++			          		- 2.03e-10*log(1+exp(0.7*(-v(gate,source)+4))) ) }
+V_INGS2 br_gs2 bl_gs2 	{0.0}
+C_IGS2  br_gs2 tr_gs2 	{1.0e-6}
+R_IGS2  tr_gs2 tl_gs2 	{1e-3}
+F_IGS2  gate source 	V_INGS2 {1.0e6}
+R_IGS22 bl_gs2 source 	{100Meg}
+*
+*
+C_GD    gate drain  	{3.6e-012}
+E_IGD	tl_gd bl_gd		Value ={ ( 1.2e-10*log(1+exp(0.477*(v(gate, drain)+3)))
++					 		+ 15.2e-10*log(1+exp(0.0670*(v(gate, drain)+32.3)))
++					  		+ 0.1e-10*log(1+exp(0.50*(v(gate, drain)+20.3)))
++					  		+ 1.2e-10*log(1+exp(0.0177*(v(gate, drain)+600.03))) ) }
+V_INGD 	br_gd bl_gd 	{0.0}
+C_IGD  	br_gd tr_gd 	{1.0e-6}
+R_IGD  	tr_gd tl_gd 	{1e-3}
+F_IGD  	gate drain 		V_INGD {1.0e6}
+R_IGD2 	bl_gd drain 	{100Meg}
+*
+*
+C_SD	source drain  	{1.23e-010}
+E_ISD	tl_sd bl_sd		Value = { ( 3e-10*log(1+exp(.3*(v(source,drain)+0.01)))
++							+ 5.31e-09*log(1+exp(.14*(v(source,drain)+66)))
++							+ 2.79e-9*log(1+exp(.06*(v(source,drain)+190)))
++							+ 8.66e-10*log(1+exp(.041*(v(source,drain)+300))) ) }
+V_INSD 	br_sd bl_sd 	{0.0}
+C_ISD  	br_sd tr_sd 	{1.0e-6}
+R_ISD  	tr_sd tl_sd 	{1e-3}
+F_ISD  	source drain	V_INSD {1.0e6}
+R_ISD2 	bl_sd drain {100Meg}
+*
+*
+.ends
+*$
+
+********************************************************************************
+***                                                                          ***
+*** Starting Transient analysis at 20:28                                     ***
+***                                                                          ***
+*** Analysis card: .tran 100m                                                ***
+***                                                                          ***
+********************************************************************************
+********************************************************************************
+***                                                                          ***
+***                            Simulation Options                            ***
+***                                                                          ***
+********************************************************************************
+RELTOL                    0.001
+ABSTOL                    1e-12
+VNTOL                     1e-06
+POINTTOL                  0.001
+TEMPERATURE               27C
+GMIN                      1e-12
+Matrix Solver             UF KLU Version 1.1
+
+
+
+********************************************************************************
+***                                                                          ***
+***                             Device parameters                            ***
+***                                                                          ***
+********************************************************************************
+Instance parameters for devices of type Resistor
+================================================
+Instance:    U1.rd        U1.rs        
+Using model: $Resistor    $Resistor    
+
+resistance   22.49840913m 1.254652955m 
+
+
+Model parameters for devices of type Diode
+==========================================
+Model:       IDEAL        
+
+is           1p           
+
+
+Analysis statistics
+===================
+
+Nominal temperature = 27
+Operating temperature = 27
+Total iterations = 3.47219e+06
+Transient iterations = 3.47218e+06
+Transient timepoints = 720527
+Accepted timepoints = 660511
+Total analysis time = 47.282
+Transient time = 0
+Matrix reordering time = 0
+L-U decomposition time = 0
+Matrix solve time = 0
+Load time = 0
+Transient L-U decomp time = 0
+Transient solve time = 0
+Circuit build time = 0.015
+Simulator initialise time = 0.016
+Data write time = 0
+Convergence test time = 0
+LTE time = 0
+JI2 Iterations = 6
+Diag. GMIN stepping iterations = 0
+Junc. GMIN stepping iterations = 0
+Source stepping iterations = 0
+PTA iterations = 0
+Number of matrix fill ins = 57
+Number of initial matrix elements = 141
+Circuit equations = 42
+State vector size = 76
+Number of write buffer faults = 0
+
+Run statistics
+==============
+
+Netlist read in time = 0.016
+Total run time = 47.375 seconds
+Analysis concluded 26/10/2025 20:29

@@ -1,0 +1,19 @@
+* C:\Users\kyrio\OneDrive\Desktop\1023_Simulation\Practice 2\Non_Ideal_Buck.sxsch
+*#SIMETRIX
+Vin Vin_P 0 48
+L L_P L_esr_N 10u   
+X$V2 Duty S PUL_SOURCE pinnames: P N params: _V1=-3 _V2=6 _FREQ=200k _DELAY=0 _DRATIOx100=25 _T_RISE=5n _T_FALL=5n _DAMP_COEF=0 _PWIDTH=1.245u _OFF_UNTIL_DELAY=0 _IDLE_IN_POP=0 _USEPHASE=0 _PHASE=0 _SHOWPARAMS=0
+X$U1 Duty Vin_P S GaN_PSpice_GS66508T_L1V4P1 pinnames: gatein drainin sourcein
+.GRAPH "V(L_P)-V(L_esr_N)" axisType="grid" axisName="VL" persistence=-1 graphName="Inductor" curveLabel="VL" analysis="tran|ac|dc" order="1" xLog="auto" yLog="auto"  nowarn=true GUID="3391f6d9-d384-4996-bcdb-85053526f37d" disabled=false 
+RL RL_P 0 4
+R$L_esr L_esr_P L_esr_N 10m
+.GRAPH RL_P axisType="grid" axisName="Vo" persistence=-1 graphName="Output" curveLabel="Vo" analysis="tran|ac|dc" order="1" xLog="auto" yLog="auto"  nowarn=true GUID="864083cc-590b-4ea9-a5d7-19d16754a1e0" disabled=false PROBEREF=Probe1  
+V$IPROBE2 L_esr_P RL_P 0.0 
+.GRAPH IPROBE2#p axisType="grid" axisName="io" persistence=-1 graphName="Output" curveLabel="io" analysis="tran|ac|dc" order="2" xLog="auto" yLog="lin"  nowarn=true GUID="8b8d7f33-ecd9-4f4c-b6d5-8f34f83a3e6b" disabled=false 
+V$IPROBE1 S L_P 0.0 
+.GRAPH IPROBE1#p axisType="grid" axisName="iL" persistence=-1 graphName="Inductor" curveLabel="iL" analysis="tran|ac|dc" order="2" xLog="auto" yLog="lin"  nowarn=true GUID="5676182d-fca1-4c70-bc97-b12fd3b7c281" disabled=false 
+D1 0 S IDEAL
+R$C_esr L_esr_P C_esr_N 5m
+C C_esr_N 0 100u   
+.tran 100m
+
