@@ -1,3 +1,10 @@
+# NTUT Embedded Systems Class
+#
+# PURIT HONGJIRAKUL (114998411)
+# KU YUN HSIANG (113598061)
+# MILAN ESSER (114012022)
+# WEN LI SUN (113598059)
+
 import network
 import socket
 import time
@@ -51,7 +58,7 @@ def webpage(random_value, state):
                 <li>PURIT HONGJIRAKUL (114998411)</li>
                 <li>KU YUN HSIANG (113598061)</li>
                 <li>MILAN ESSER (114012022)</li>
-                <li></li>
+                <li>WEN LI SUN (113598059)</li>
             </ul>
         </body>
         </html>
