@@ -15,3 +15,6 @@ SIMPLIS_Data/
 # spice models
 GS66508T-Spice-Models-V4P1/
 GS66516T-Spice-Models-V4P1/
+
+classes/ntut_lab/esp32_http/data/
+classes/ntut_lab/esp32_http/tools/
