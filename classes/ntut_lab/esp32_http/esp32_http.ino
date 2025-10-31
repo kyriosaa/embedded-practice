@@ -90,7 +90,7 @@ void setup() {
   Serial.println("\nConnected to WiFi");
   Serial.print("Local IP: ");
   Serial.println(WiFi.localIP());
-  Serial.println("Access via: http://101.12.246.165:80/api/data"); // UPDATE IF NETWORK CHANGE
+  Serial.println("Access via: http://140.124.249.112:80/api/data"); // UPDATE IF NETWORK CHANGE
 
   // register handlers
   server.on("/api/data", HTTP_POST, handlePostData);
