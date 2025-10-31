@@ -13,11 +13,11 @@ from machine import Pin
 
 led = Pin('LED', Pin.OUT)
 
-ssid = 'NTUT'
+ssid = 'IcePick15'
 password = 'qwertyasdf'
 
 # HTML template
-def webpage(random_value, state):
+def webpage(rand_num, state, hello_msg):
     html = f"""
         <!DOCTYPE html>
         <html>
@@ -52,6 +52,12 @@ def webpage(random_value, state):
                 <input type="submit" value="Light off" />
             </form>
             <p>LED state: {state}</p>
+            <br>
+            <h2>Random Number Generator</h2>
+            <form action="./random">
+                <input type="submit" value="Generate" />
+            </form>
+            <p>Number: {rand_num}</p>
             <br>
             <h2>Created by:</h2>
             <ul>
@@ -99,6 +105,7 @@ print('Listening on', addr)
 # init variables
 state = "OFF"
 hello_msg = ""
+rand_num = ""
 
 # main loop to listen for connections
 while True:
@@ -126,9 +133,11 @@ while True:
             state = 'OFF'
         elif request == '/hello?':
             hello_msg = "Hello from Raspberry Pi Pico 2 W!"
+        elif request == '/random?':
+            rand_num = random.randint(1, 100)
 
         # generate HTML response & send
-        response = webpage(hello_msg, state)  
+        response = webpage(rand_num, state, hello_msg)  
         conn.send('HTTP/1.0 200 OK\r\nContent-type: text/html\r\n\r\n')
         conn.send(response)
         conn.close()
