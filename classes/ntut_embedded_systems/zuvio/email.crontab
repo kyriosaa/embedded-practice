@@ -1,0 +1,4 @@
+# Schedule an email to kiki on 14/10/2026 only for that year
+# use crontab
+
+0 9 14 10 * [ $(date +\%Y) -eq 2026 ] && echo "I am sending an email to you." | mail -s "Scheduled Message for 2026" kiki
