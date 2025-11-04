@@ -233,11 +233,11 @@ SHOW ALL YOUR WORK. REMEMBER THAT PROGRAM SEGMENTS ARE TO BE WRITTEN IN JAVA.
 
     Dividing the deck in half produces two stacks of cards - one stack with cards 0 through 4, the other with cards 5 through 9. Interlacing the stacks produces a deck in the following order:
 
-    <img src='./resources/frq-q2-order' width='100%' >
+    <img src='./resources/frq-q2-order.png' width='100%' >
 
     The number of times needed to shuffle the deck until it returns to its original order is called the *reorder count*. Note that the reorder count for a deck of ten cards is six:
 
-    <img src='./resources/frq-q2-count' width='100%' >
+    <img src='./resources/frq-q2-count.png' width='100%' >
 
     A deck is modeled by the following incomplete declaration of the <code>Deck</code> class:
 
