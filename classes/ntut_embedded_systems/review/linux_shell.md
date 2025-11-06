@@ -20,7 +20,7 @@
 | `whereis`| Locate the binary and man page files for a command |
 | `which` | Show pull path of commands where given commands reside |
 
-|File viewing and editing||
+||File viewing and editing|
 |---------|---------------|
 | `emacs` | Full screen editor |
 | `pico`  | Simple text editor |
@@ -29,7 +29,7 @@
 | `tail`  | Look at the last  10 lines of a file |
 | `head`  | Look at the first 10 lines of a file |
 
-|File compression, backup, and restoring||
+||File compression, backup, and restoring|
 |--------------|-------------------------|
 | `compress`   | Compress data |
 | `uncompress` | Expand data |
