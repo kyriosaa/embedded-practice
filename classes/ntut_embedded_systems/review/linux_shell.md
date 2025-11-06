@@ -119,20 +119,22 @@ echo The current directory is $directory
 > - Everything inside is treated as a command and the shell will attempt to execute it. If the execution is successful, the primary output from the command replaces the string.
 
 ##
+**11. In the above example, if there are less than 3 items in the response, what will the trailing variables be set to?**
+
 ```bash
 echo "Please enter three file names:"
 read filea fileb filec
 echo "These files are used: $filea $fileb $filec"
 ```
-**11. In the above example, if there are less than 3 items in the response, what will the trailing variables be set to?**
 
 > blank ('')
 
 ##
+**12. In a shell script, what type of variable will 'a' be?**
+
 ```bash
 a=1234
 ```
-**12. In a shell script, what type of variable will 'a' be?**
 
 > String
 

@@ -11,33 +11,37 @@
 > minute hour day month weekday command
 
 ##
+**3. What time and date does this format get translated to?**
+
 ```crontab
 0 0 14 2 *
 ```
-**3. What time and date does this format get translated to?**
 
 > On the midnight of Valentine's day
 
 ##
+**4. What time and date does this format get translated to?**
+
 ```crontab
 45 10 * * 1-5
 ```
-**4. What time and date does this format get translated to?**
 
 > 10:45 AM, from Mon to Fri
 
 ##
+**5. What time and date does this format get translated to?**
+
 ```crontab
 /3 * * * *
 ```
-**5. What time and date does this format get translated to?**
 
 > Every three minutes
 
 ##
+**6. What time and date does this format get translated to?**
+
 ```crontab
 0,30 * 13 * 5
 ```
-**6. What time and date does this format get translated to?**
 
 > Every half hour on Friday and every half hour on the 13th
