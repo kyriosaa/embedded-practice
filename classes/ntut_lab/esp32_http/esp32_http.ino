@@ -33,23 +33,21 @@ void setup() {
   }
   Serial.println("SPIFFS mounted successfully.");
 
-    // Load WiFi config from JSON file
-  File configFile = SPIFFS.open("/wifi_config.json", "r");
+  // load WiFi config
+  File configFile = SPIFFS.open("/wifi_config.txt", "r");
   if (!configFile) {
-    Serial.println("Failed to open /wifi_config.json.");
+    Serial.println("Failed to open /wifi_config.txt.");
     return;
   }
-  StaticJsonDocument<200> configDoc;
-  DeserializationError configError = deserializeJson(configDoc, configFile);
+  ssid = configFile.readStringUntil('\n');
+  ssid.trim(); 
+  username = configFile.readStringUntil('\n');
+  username.trim();
+  password = configFile.readStringUntil('\n');
+  password.trim();
+  identity = configFile.readStringUntil('\n');
+  identity.trim();
   configFile.close();
-  if (configError) {
-    Serial.println("Failed to parse /wifi_config.json.");
-    return;
-  }
-  ssid = configDoc["ssid"] | "";
-  username = configDoc["username"] | "";
-  password = configDoc["password"] | "";
-  identity = configDoc["identity"] | "";
   Serial.println("WiFi config loaded from SPIFFS.");
   
   // load API key
