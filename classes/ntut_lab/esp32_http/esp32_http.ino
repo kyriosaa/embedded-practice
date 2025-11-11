@@ -1,17 +1,12 @@
 #include <WiFi.h>
-#include <esp_wpa2.h>
 #include <WebServer.h>
 #include <ArduinoJson.h>
-#include <SPIFFS.h>
-
-// creds are loaded from SPIFFS
-String ssid = "";
-String username = "";
-String password = "";
-String identity = "";
+#include "LittleFS.h"
 
 // SPIFFS read
 String API_KEY;
+String ssid;
+String password;
 
 const int MOTOR_PIN1 = 12;
 const int MOTOR_PIN2 = 13;
@@ -27,31 +22,36 @@ void setup() {
   Serial.begin(115200);
 
   // init SPIFFS
-  if (!SPIFFS.begin(true)) {
+  if (!LittleFS.begin(true)) {
     Serial.println("SPIFFS mount failed.");
     return;  
   }
   Serial.println("SPIFFS mounted successfully.");
 
-  // load WiFi config
-  File configFile = SPIFFS.open("/wifi_config.txt", "r");
-  if (!configFile) {
-    Serial.println("Failed to open /wifi_config.txt.");
+  // load SSID
+  File ssidFile = LittleFS.open("/ssid.txt", "r");
+  if (!ssidFile) {
+    Serial.println("Failed to open /ssid.txt");
     return;
   }
-  ssid = configFile.readStringUntil('\n');
-  ssid.trim(); 
-  username = configFile.readStringUntil('\n');
-  username.trim();
-  password = configFile.readStringUntil('\n');
+  ssid = ssidFile.readString();
+  ssidFile.close();
+  ssid.trim();
+  Serial.println("SSID loaded from SPIFFS");
+
+  // load password
+  File passFile = LittleFS.open("/pass.txt", "r");
+  if (!passFile) {
+    Serial.println("Failed to open /pass.txt");
+    return;
+  }
+  password = passFile.readString();
+  passFile.close();
   password.trim();
-  identity = configFile.readStringUntil('\n');
-  identity.trim();
-  configFile.close();
-  Serial.println("WiFi config loaded from SPIFFS.");
+  Serial.println("Password loaded from SPIFFS");
   
   // load API key
-  File keyFile = SPIFFS.open("/api_key.txt", "r");
+  File keyFile = LittleFS.open("/api_key.txt", "r");
   if (!keyFile) {
     Serial.println("Failed to open /api_key.txt");
     return; 
@@ -68,18 +68,9 @@ void setup() {
   digitalWrite(MOTOR_PIN2, LOW);
   analogWrite(MOTOR_PWM, 0);
   
-  // WiFi conn
-  WiFi.disconnect(true);
-  WiFi.mode(WIFI_STA);
-  
-  // enterprise wifi authentication (PEAP)
-  esp_wifi_sta_wpa2_ent_set_identity((uint8_t *)identity.c_str(), identity.length());
-  esp_wifi_sta_wpa2_ent_set_username((uint8_t *)username.c_str(), username.length());
-  esp_wifi_sta_wpa2_ent_set_password((uint8_t *)password.c_str(), password.length());
-  esp_wifi_sta_wpa2_ent_enable();
-  
-  WiFi.begin(ssid.c_str());
-  Serial.print("Connecting to Enterprise WiFi");
+  // wifi conn
+  WiFi.begin(ssid, password);
+  Serial.print("Connecting to WiFi");
   while (WiFi.status() != WL_CONNECTED) {
     delay(500);
     Serial.print(".");
@@ -88,7 +79,7 @@ void setup() {
   Serial.println("\nConnected to WiFi");
   Serial.print("Local IP: ");
   Serial.println(WiFi.localIP());
-  Serial.println("Access via: http://140.124.249.112:80/api/data"); // UPDATE IF NETWORK CHANGE
+  Serial.println("Access via: http://101.12.246.165:80/api/data");
 
   // register handlers
   server.on("/api/data", HTTP_POST, handlePostData);
