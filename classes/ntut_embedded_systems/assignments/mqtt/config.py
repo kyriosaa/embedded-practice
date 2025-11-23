@@ -1,5 +1,0 @@
-wifi_ssid = 'IcePick15'
-wifi_password = 'qwertyasdf'
-mqtt_server = b'1e8035a9d6ab4fbc93cb7f56cb9184e4.s1.eu.hivemq.cloud'
-mqtt_username = b'kyriosaa'
-mqtt_password = b'Qwertyasdf1'
