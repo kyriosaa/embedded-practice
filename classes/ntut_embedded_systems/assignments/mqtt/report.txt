@@ -1,0 +1,44 @@
+Group:
+114998411
+113598061
+114012022
+113598059
+
+--------------------------------------
+QoS 0 (At most once)
+
+QoS 0 operates by just having the publisher send out the data to the broker once
+without caring if the broker actually received the message or not. It's quick and
+not resource intensive but risks the messages being lost if a network interruption
+was to occur. Good for data where some loss is acceptable such as sensor data.
+
+--------------------------------------
+QoS 1 (At least once)
+
+Qos 1 operates by waiting for the broker to return a PUBACK. If it doesn't receive
+one, it retries sending the message. If more messages are sent during this time, the
+messages are all lined up in a queue and sent when a network connection gets
+re-established. It's a little slower than Qos 0 because we need to wait for a return
+handshake. Good for alerts or control commands where we can't risk losing data such
+as a security alarm or an important function command in a machine.
+
+--------------------------------------
+QoS 2 (Exactly once)
+
+Qos 2 uses a 4-step handshake method to make sure that the message is received exactly
+once. This is to make sure there is no data loss or duplicate data. This method has 
+the most network overhead and latency.
+
+(PUBLISH -> PUBREC -> PUBREL -> PUBCOMP)
+
+This is good for systems that can not risk duplicate messages such as financial
+transactions or counting applications.
+
+--------------------------------------
+Based on our investigation, we believe that...
+
+QoS 0 is best suited for real-time environmental monitoring because lost messages are 
+easily ignored if real-time data is sent every couple seconds.
+
+QoS 2 is best for critical alert notifications because we need to make sure the alert
+is actually sent but a duplicate message doesn't change the outcome of the system.

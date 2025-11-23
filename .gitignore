@@ -18,3 +18,6 @@ GS66516T-Spice-Models-V4P1/
 
 classes/ntut_lab/esp32_http/data/
 classes/ntut_lab/esp32_http/tools/
+
+# other stuff
+classes/ntut_embedded_systems/assignments/mqtt/config.py
