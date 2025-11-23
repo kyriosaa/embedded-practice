@@ -40,5 +40,5 @@ Based on our investigation, we believe that...
 QoS 0 is best suited for real-time environmental monitoring because lost messages are 
 easily ignored if real-time data is sent every couple seconds.
 
-QoS 2 is best for critical alert notifications because we need to make sure the alert
+QoS 1 is best for critical alert notifications because we need to make sure the alert
 is actually sent but a duplicate message doesn't change the outcome of the system.
