@@ -1,3 +1,4 @@
 .vscode
 desktop.ini
 .env
+__pycache__
