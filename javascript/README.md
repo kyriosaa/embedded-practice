@@ -1,0 +1,3 @@
+By the way, there are some submodules in this folder (blue links) that are not accessible due to them being private repositories.
+
+Back when I first started learning programming, I made a lot of repositories that should have just been put in a practice repo like this one but I chose to make them their own repo. In order to preserve my git history while keeping my public repos relevant, I've privated those old projects.

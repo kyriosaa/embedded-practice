@@ -1,0 +1,15 @@
+[submodule "classes/modern-react-with-redux"]
+	path = classes/modern-react-with-redux
+	url = https://github.com/kyriosaa/reactjs-practice
+[submodule "classes/threejs-typescript"]
+	path = classes/threejs-typescript
+	url = https://github.com/kyriosaa/threejs-practice
+[submodule "mei-webpage"]
+	path = mei-webpage
+	url = https://github.com/kyriosaa/mei-webpage
+[submodule "image-search"]
+	path = image-search
+	url = https://github.com/kyriosaa/image-search
+[submodule "reading-list"]
+	path = reading-list
+	url = https://github.com/kyriosaa/reading-list

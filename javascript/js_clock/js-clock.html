@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Digital Clock</title>
+    <style>
+      body {
+        font-family: "Times New Roman", Times, serif, sans-serif;
+        text-align: center;
+        margin: 20px;
+      }
+
+      .time-display {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 5px;
+        margin-top: 20px;
+      }
+
+      .time-display img {
+        width: 40px;
+        height: 60px;
+      }
+
+      .char-time {
+        font-size: 24px;
+        font-weight: bold;
+        color: black;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>JavaScriptclock</h1>
+    <div>
+      <div id="charTime" class="char-time">--:--:--</div>
+    </div>
+
+    <div>
+      <div class="time-display" id="timeDisplay"></div>
+    </div>
+    <hr />
+    <button onclick="startClock()">Start</button>
+    <button onclick="stopClock()">Stop</button>
+    <hr />
+
+    <script>
+      let clock = null;
+
+      function startClock() {
+        // Start updating the clock every second
+        clock = setInterval(showTime, 1000);
+      }
+
+      function stopClock() {
+        // Stop the clock
+        clearInterval(clock);
+      }
+
+      function showTime() {
+        const now = new Date();
+        const hours = toDigits(now.getHours(), 2);
+        const minutes = toDigits(now.getMinutes(), 2);
+        const seconds = toDigits(now.getSeconds(), 2);
+
+        const timeString = `${hours}:${minutes}:${seconds}`;
+
+        // Update the char-style clock
+        document.getElementById("charTime").textContent = timeString;
+
+        // Update the graphic-style clock
+        displayTimeWithImages(timeString);
+      }
+
+      function toDigits(value, digit) {
+        let result = value.toString();
+        while (result.length < digit) {
+          result = "0" + result;
+        }
+        return result;
+      }
+
+      function displayTimeWithImages(timeString) {
+        const timeDisplay = document.getElementById("timeDisplay");
+        timeDisplay.innerHTML = ""; // Clear the previous images
+
+        for (const char of timeString) {
+          const img = document.createElement("img");
+
+          if (char === ":") {
+            img.src = "./images/colon.png"; // Path to colon image (use your actual colon file if available)
+          } else {
+            img.src = `./numbers/B${char}.jpg`; // Path to digit images (B0-B9)
+          }
+          img.alt = char;
+          timeDisplay.appendChild(img);
+        }
+      }
+    </script>
+  </body>
+</html>

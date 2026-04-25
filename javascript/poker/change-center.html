@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      table,
+      th {
+        border: 1px solid black;
+        text-align: center;
+        vertical-align: middle;
+      }
+      img {
+        padding: 3px;
+        cursor: pointer;
+      }
+      .big-card {
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Exercise 1: Change Big Card</h1>
+
+    <table>
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+      <tr>
+        <th></th>
+        <th colspan="2" rowspan="2">
+          <img
+            id="bigCard"
+            src="./pokers/PokerBack-0.png"
+            alt="Big Card"
+            class="big-card"
+          />
+        </th>
+        <th></th>
+      </tr>
+      <tr>
+        <th></th>
+        <th></th>
+      </tr>
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </table>
+
+    <hr />
+
+    <script>
+      // Define specific card images in the desired order
+      const cardImages = [
+        "./pokers/poker13.png",
+        "./pokers/poker8.png",
+        "./pokers/poker11.png",
+        "./pokers/poker38.png",
+        "./pokers/poker29.png",
+        "./pokers/poker32.png",
+        "./pokers/poker37.png",
+        "./pokers/poker26.png",
+        "./pokers/poker10.png",
+        "./pokers/poker47.png",
+        "./pokers/poker13.png",
+        "./pokers/poker9.png",
+        "./pokers/poker1.png",
+      ];
+
+      const ths = document.querySelectorAll("th:not([colspan])");
+      const bigCard = document.getElementById("bigCard");
+
+      // Fill the remaining cells with specific cards
+      for (let i = 0; i < ths.length; i++) {
+        const img = document.createElement("img");
+        img.src = cardImages[i];
+        ths[i].appendChild(img);
+
+        // Change the big card to the clicked card
+        img.addEventListener("click", function () {
+          bigCard.src = this.src;
+        });
+      }
+    </script>
+  </body>
+</html>

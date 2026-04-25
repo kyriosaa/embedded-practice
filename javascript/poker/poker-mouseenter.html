@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      table {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      div {
+        width: 400px;
+        height: 400px;
+        border: 1px;
+        border-color: green;
+        border-style: dashed;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Exercise 2: Poker mouseenter</h1>
+
+    <div>
+      <table>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+        <tr>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+          <th></th>
+        </tr>
+      </table>
+    </div>
+
+    <!-- <hr/> Stands for "Horizontal Rule" and is used to create a break in the webpage for better structure -->
+    <hr />
+
+    <script>
+      // Runs the fillPokers(ths) function when the page loads
+      window.onload = function () {
+        fillPokers(ths);
+      };
+
+      // Algorithm to assign a number to a card
+      poker_nums = new Array(52);
+      for (let k = 0; k < poker_nums.length; ++k) {
+        poker_nums[k] = k;
+      }
+
+      ths = document.querySelectorAll("th");
+
+      // Function that gets called when button is clicked
+      function fillPokers(ths) {
+        shuffle(poker_nums);
+
+        for (let k = 0; k < ths.length; ++k) {
+          img = document.createElement("img");
+          img.src = "./pokers/poker" + poker_nums[k] + ".png";
+
+          ths[k].appendChild(img);
+
+          (function () {
+            var angle = 0;
+            var dir;
+            if (Math.floor(Math.random() * 2) % 2 == 0) dir = 1;
+            else dir = -1;
+
+            img.addEventListener("mouseenter", function () {
+              angle = Math.floor(Math.random() * 161) - 80;
+              this.style.transform = `rotate(${angle}deg)`;
+              this.style.transition = "linear 0.3s";
+            });
+          })();
+        }
+      }
+
+      function shuffle(ary) {
+        for (k = ary.length - 1; k > 0; k--) {
+          p = Math.floor(Math.random() * (k + 1));
+          temp = ary[k];
+          ary[k] = ary[p];
+          ary[p] = temp;
+        }
+      }
+    </script>
+  </body>
+</html>

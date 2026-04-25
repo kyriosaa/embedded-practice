@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      table,
+      th {
+        border: 1px solid black;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Exercise 1: Rotating Poker Cards</h1>
+
+    <!-- Exercise calls for a 4x4 table -->
+    <table>
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+      <tr>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+      </tr>
+    </table>
+
+    <!-- <hr/> Stands for "Horizontal Rule" and is used to create a break in the webpage for better structure -->
+    <hr />
+
+    <!-- onclick is an event caller that runs the "fillPokers(ths)" function when clicked -->
+    <button onclick="fillPokers(ths)">Fill Cards</button>
+
+    <script>
+      // Algorithm to assign a number to a card
+      poker_nums = new Array(52);
+      for (let k = 0; k < poker_nums.length; ++k) {
+        poker_nums[k] = k;
+      }
+
+      ths = document.querySelectorAll("th");
+
+      // Function that gets called when button is clicked
+      function fillPokers(ths) {
+        shuffle(poker_nums);
+
+        for (let k = 0; k < ths.length; ++k) {
+          img = document.createElement("img");
+          img.src = "./pokers/poker" + poker_nums[k] + ".png";
+          img.style.padding = "3px";
+
+          ths[k].appendChild(img);
+
+          (function () {
+            var angle = 0;
+            var dir;
+            if (Math.floor(Math.random() * 2) % 2 == 0) dir = 1;
+            else dir = -1;
+
+            img.addEventListener("click", function () {
+              angle += dir * 45;
+              this.style.transform = `rotate(${angle}deg)`;
+              this.style.transition = "linear 0.3s";
+            });
+          })();
+        }
+      }
+
+      function shuffle(ary) {
+        let size = ary.length;
+        for (let k = 0; k < size - 1; ++k) {
+          idx = Math.floor(Math.random() * (size - k));
+          temp = ary[size - 1 - k];
+          ary[size - 1 - k] = ary[idx];
+          ary[idx] = temp;
+        }
+      }
+    </script>
+  </body>
+</html>
