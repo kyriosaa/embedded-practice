@@ -85,3 +85,6 @@ embedded/classes/ntut_embedded_systems/assignments/mqtt/config.py
 
 # digital twins (honestly ignoring this entire folder for now)
 digital_twins/
+
+# ignored projects (alr made into another repository)
+code/javascript/mei_webpage/
