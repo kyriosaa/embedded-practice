@@ -1,1 +1,11 @@
+# general
+.vscode
+.env
 desktop.ini
+.DS_Store 
+
+# python
+__pycache__
+
+# javascript
+node_modules/ 
