@@ -38,6 +38,7 @@ local.properties
 *.aab
 
 # Python
+tempCodeRunnerFile.py
 __pycache__/
 *.py[cod]
 *$py.class
