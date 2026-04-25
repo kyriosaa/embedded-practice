@@ -1,0 +1,64 @@
+{
+  "tests": [
+    {
+      "name": "dialing_code_test1",
+      "setup": "g++ -o dialing_code.out dialing_code.c",
+      "run": "./dialing_code.out",
+      "input": "2",
+      "output": "Error: 2 is not a valid country code.",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "dialing_code_test2",
+      "setup": "",
+      "run": "./dialing_code.out",
+      "input": "889",
+      "output": "889 is the code for Bangladesh.",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "find_closest_flight_test1",
+      "setup": "g++ -o find_closest_flight.out find_closest_flight.c",
+      "run": "./find_closest_flight.out",
+      "input": "12:00",
+      "output": "Closest departure time is 11:19 a.m., arriving at 1:31 p.m.",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "find_closest_flight_test2",
+      "setup": "",
+      "run": "./find_closest_flight.out",
+      "input": "14:25",
+      "output": "Closest departure time is 2:00 p.m., arriving at 4:08 p.m.",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "compare_date_test1",
+      "setup": "g++ -o compare_date.out compare_date.c",
+      "run": "./compare_date.out",
+      "input": "1/1/99\r\n2/5/96\r\n",
+      "output": "1/1/99 comes before 2/5/96",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "compare_date_test2",
+      "setup": "",
+      "run": "./compare_date.out",
+      "input": "1/7/99\r\n1/2/99",
+      "output": "1/2/99 comes before 1/7/99",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    }
+  ]
+}

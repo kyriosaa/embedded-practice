@@ -1,0 +1,74 @@
+{
+  "tests": [
+    {
+      "name": "find_closest_flight_test1",
+      "setup": "g++ -o find_closest_flight find_closest_flight.cc",
+      "run": "./find_closest_flight",
+      "input": "15:34",
+      "output": "Closest departure time is 3:45 p.m arriving at 5:55 p.m",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 2
+    },
+    {
+      "name": "find_closest_flight_test2",
+      "setup": "",
+      "run": "./find_closest_flight",
+      "input": "0:00",
+      "output": "Closest departure time is 8:00 a.m arriving at 10:16 a.m",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 2
+    },
+    {
+      "name": "pay_amount_test1",
+      "setup": "g++ -o pay_amount pay_amount.cc",
+      "run": "./pay_amount",
+      "input": "97",
+      "output": "$20 bills: 4\r\n$10 bills: 1\r\n $5 bills: 1\r\n $1 bills: 2",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 2
+    },
+    {
+      "name": "pay_amount_test2",
+      "setup": "",
+      "run": "./pay_amount",
+      "input": "143",
+      "output": "$20 bills: 7\r\n$10 bills: 0\r\n $5 bills: 0\r\n $1 bills: 3",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 2
+    },
+    {
+      "name": "reduce_test1",
+      "setup": "g++ -o reduce reduce.cc",
+      "run": "./reduce",
+      "input": "97/13",
+      "output": "97/13",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 2
+    },
+    {
+      "name": "reduce_test2",
+      "setup": "",
+      "run": "./reduce",
+      "input": "96/24",
+      "output": "4/1",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 2
+    },
+    {
+      "name": "poker_test1",
+      "setup": "g++ -o poker poker.cc",
+      "run": "./poker",
+      "input": "5s\r\n5d\r\n5c\r\n5h\r\nac\r\n0",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 2
+    }
+  ]
+}

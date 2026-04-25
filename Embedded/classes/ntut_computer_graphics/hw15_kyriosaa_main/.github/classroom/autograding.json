@@ -1,0 +1,44 @@
+{
+  "tests": [
+    {
+      "name": "TestProject2",
+      "setup": "g++ -o project2.out ./project2/justify.c ./project2/line.c ./project2/word.c",
+      "run": "./project2.out",
+      "input": "C      is quirky,   flawed,    and  an enormous     success.\r\n       Although accidents of     history  surely  helped,\r\n    it evidently      satisfied    a    need    for  a   system  implementation       language\r\nefficient    enough    to  displace            assembly   language,\r\n      yet sufficiently   abstract   and fluent        to describe     algorithms   and\r\ninteractions    in a      wide    variety   of   environments.\r\n                       --       Dennis     M.          Ritchie",
+      "output": " Although\r\naccidents  of history surely helped,\r\n",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 2
+    },
+    {
+      "name": "TestProject3",
+      "setup": "g++ -o project3.out ./project3/qsort.c ./project3/quicksort.c ",
+      "run": "./project3.out",
+      "input": "1 5 9 6 8 4 6 2 5 13",
+      "output": "1 2 4 5 5 6 6 8 9 13",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 2
+    },
+    {
+      "name": "TestProject4",
+      "setup": "g++ -o project4.out ./project4/remind.c ./project4/readline.c",
+      "run": "./project4.out",
+      "input": "15 POSD\r\n16 movie\r\n17 go mountain\r\n18 PL\r\n1 midterm\r\n0\r\n\r\n",
+      "output": "Day Reminder\r\n  1 midterm\r\n 15 POSD\r\n 16 movie\r\n 17 go mountain\r\n 18 PL",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 2
+    },
+    {
+      "name": "TestProject5",
+      "setup": "g++ -o project5.out ./project5/cal.c ./project5/stack.c ",
+      "run": "./project5.out",
+      "input": "3 9 5 * - =\r\nq",
+      "output": "-42",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 2
+    }
+  ]
+}

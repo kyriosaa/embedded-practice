@@ -1,0 +1,3 @@
+C is pretty cool
+C++ is also pretty cool
+However, I'm learning C right now

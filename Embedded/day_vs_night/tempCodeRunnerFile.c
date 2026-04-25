@@ -1,0 +1,2 @@
+
+            FillRect(hdc, &rect, nightBrush);

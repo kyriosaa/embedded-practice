@@ -1,0 +1,4 @@
+Number of elements: 20
+Values: 5 12 7 18 9 21 4 15 11 6 14 8 17 10 13 19 3 16 2 20 
+Average: 11.500000
+Max: 21

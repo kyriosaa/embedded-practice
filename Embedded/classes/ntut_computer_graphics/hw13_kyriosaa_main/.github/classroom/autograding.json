@@ -1,0 +1,74 @@
+{
+  "tests": [
+    {
+      "name": "sum_test1",
+      "setup": "gcc -o sum sum.c",
+      "run": "./sum",
+      "input": "",
+      "output": "Total: 94",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 2
+    },
+    {
+      "name": "compute_vowel_count_test1",
+      "setup": "gcc -o compute_vowel_count compute_vowel_count.c",
+      "run": "./compute_vowel_count",
+      "input": "This is Home work 13.",
+      "output": "Your sentence contains 5 vowels.",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 2
+    },
+    {
+      "name": "compute_vowel_count_test2",
+      "setup": "",
+      "run": "./compute_vowel_count",
+      "input": "And that's the way it is.",
+      "output": "Your sentence contains 6 vowels.",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 2
+    },
+    {
+      "name": "reverse_name_tset1",
+      "setup": "gcc -o reverse_name reverse_name.c",
+      "run": "./reverse_name",
+      "input": "Lloyd Posdick",
+      "output": "Posdick, L.",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 2
+    },
+    {
+      "name": "reverse_name_test2",
+      "setup": "",
+      "run": "./reverse_name",
+      "input": "Chance Emerson",
+      "output": "Emerson, C.",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 2
+    },
+    {
+      "name": "date_transform_test1",
+      "setup": "gcc -o date_transform date_transform.c",
+      "run": "./date_transform",
+      "input": "2/17/2011",
+      "output": "You entered the date February 17, 2011",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 2
+    },
+    {
+      "name": "date_transform_test2",
+      "setup": "",
+      "run": "./date_transform",
+      "input": "11/15/2020",
+      "output": "You entered the date November 15, 2020",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 2
+    }
+  ]
+}

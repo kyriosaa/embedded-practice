@@ -1,0 +1,74 @@
+{
+  "tests": [
+    {
+      "name": "reversal_test1",
+      "setup": "g++ -o reversal reversal.cc",
+      "run": "./reversal",
+      "input": "\"Happy Birthday!\"",
+      "output": "\"!yadhtriB yppaH\"",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 2
+    },
+    {
+      "name": "reversal_test2",
+      "setup": "",
+      "run": "./reversal",
+      "input": "\"Able Was I ere I saw Elba.\"",
+      "output": "\".ablE was I ere I saW elbA\"",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 2
+    },
+    {
+      "name": "palindrome_test1",
+      "setup": "g++ -o palindrome palindrome.cc",
+      "run": "./palindrome",
+      "input": "Anna",
+      "output": "Palindrome",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 2
+    },
+    {
+      "name": "reverse_sentence_test1",
+      "setup": "g++ -o reverse_sentence reverse_sentence.cc",
+      "run": "./reverse_sentence",
+      "input": "The shortest way to do many things is to only one thing at a time.",
+      "output": "time a at thing one only to is things many do to way shortest The.",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 2
+    },
+    {
+      "name": "reverse_sentence_test2",
+      "setup": "",
+      "run": "./reverse_sentence",
+      "input": "Are you happy? Yes!",
+      "output": "happy you Are?",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 2
+    },
+    {
+      "name": "maxmin_test1",
+      "setup": "g++ -o maxmin maxmin.cc",
+      "run": "./maxmin",
+      "input": "1 3 5 7 9 11 13 15 17 19",
+      "output": "Largest: 19\r\nSmallest: 1",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 2
+    },
+    {
+      "name": "maxmin_test2",
+      "setup": "",
+      "run": "./maxmin",
+      "input": "5 86 94 51 23 17 61 59 2 84",
+      "output": "Largest: 94\r\nSmallest: 2",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 2
+    }
+  ]
+}
