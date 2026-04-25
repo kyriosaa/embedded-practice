@@ -20,21 +20,21 @@ function booleanOperations() {
     label1.textContent = `Age: ${age1}, Eligible to vote: ${canVote(age1)}`;
     label2.textContent = `Age: ${age2}, Eligible to vote: ${canVote(age2)}`;
 
-    // if(canVote(age1) == true) {
-    //     result = `You may enter the voting booth`;
-    //     label1Result.textContent = result;
-    // } else {
-    //     result = `You may not enter the voting booth`;
-    //     label1Result.textContent = result;
-    // }
+    if(canVote(age1) == true) {
+        result = `You may enter the voting booth`;
+        label1Result.textContent = result;
+    } else {
+        result = `You may not enter the voting booth`;
+        label1Result.textContent = result;
+    }
 
-    // if(canVote(age2) == true) {
-    //     result = `You may enter the voting booth`;
-    //     label2Result.textContent = result;
-    // } else {
-    //     result = `You may not enter the voting booth`;
-    //     label2Result.textContent = result;
-    // }
+    if(canVote(age2) == true) {
+        result = `You may enter the voting booth`;
+        label2Result.textContent = result;
+    } else {
+        result = `You may not enter the voting booth`;
+        label2Result.textContent = result;
+    }
 
 }
 
