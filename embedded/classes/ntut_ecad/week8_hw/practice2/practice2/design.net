@@ -1,0 +1,18 @@
+* F:\engineering\practice\embedded\classes\ntut_ecad\week8_hw\practice2_nonideal_buck\practice2.wxsch
+*#SIMETRIX
+X$V2 V2_P U1_sourcein PUL_SOURCE pinnames: P N params: _V1=-3 _V2=6 _FREQ=100k _DELAY=0 _DRATIOx100=50 _T_RISE=10n _T_FALL=10n _DAMP_COEF=0 _PWIDTH=4.99u _OFF_UNTIL_DELAY=0 _IDLE_IN_POP=0 _USEPHASE=0 _PHASE=0 _SHOWPARAMS=0
+X$U1 V2_P V1_P U1_sourcein GaN_PSpice_GS66516T_L1V4P1 pinnames: gatein drainin sourcein
+V1 V1_P 0 18
+R3 R3_P R3_N 56.18m
+.GRAPH R1_P axisType="grid" axisName="Vo" persistence=-1 graphName="Output" curveLabel="Vo" analysis="tran|ac|dc" xLog="auto" yLog="auto"  nowarn=true GUID="5f289d05-c8b5-4ee7-a5ff-6f6b4a657afc" disabled=false PROBEREF=Probe1  
+R1 R1_P 0 833.33m
+.GRAPH "V(L1_P)-V(R3_P)" axisType="grid" axisName="VL" persistence=-1 graphName="Inductance" curveLabel="VL" analysis="tran|ac|dc" xLog="auto" yLog="auto"  nowarn=true GUID="6c177d60-27ce-4e66-928a-4636c5c110b6" disabled=false 
+L1 L1_P R3_P 32u   
+V$IPROBE2 U1_sourcein L1_P 0.0 
+.GRAPH IPROBE2#p axisType="grid" axisName="iL" persistence=-1 graphName="Inductance" curveLabel="iL" analysis="tran|ac|dc" xLog="auto" yLog="lin"  nowarn=true GUID="4b3074c9-05b7-4b2e-b343-755be34db601" disabled=false 
+V$IPROBE1 R3_P R1_P 0.0 
+.GRAPH IPROBE1#p axisType="grid" axisName="io" persistence=-1 graphName="Output" curveLabel="io" analysis="tran|ac|dc" xLog="auto" yLog="lin"  nowarn=true GUID="9022a32b-b0a1-473b-a924-928d282308a9" disabled=false 
+D1 0 U1_sourcein IDEAL
+C1 R3_N 0 1.117m   
+.tran 100m
+
