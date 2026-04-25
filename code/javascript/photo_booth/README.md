@@ -1,0 +1,3 @@
+# Moli Photobooth
+
+WIP
