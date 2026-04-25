@@ -9,3 +9,6 @@ __pycache__
 
 # javascript
 node_modules/ 
+
+# digital twins (honestly ignoring this entire folder for now)
+digital_twins/
