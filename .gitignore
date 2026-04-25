@@ -1,14 +1,59 @@
 # general
-.vscode
+.vscode/
 .env
 desktop.ini
-.DS_Store 
+.DS_Store
+*.bak
+*~
+*.log
 
-# python
-__pycache__
+# C/C++
+*.exe
+*.out
+*.o
+*.obj
+*.a
+*.lib
+*.dll
+*.so
+*.dylib
 
-# javascript
-node_modules/ 
+# Java
+*.class
+*.jar
+*.war
+.metadata/
+
+# Kotlin / Android
+.gradle/
+build/
+local.properties
+*.apk
+*.aab
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+venv/
+.venv/
+env/
+.env/
+
+# JavaScript / Node
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# MATLAB
+*.asv
+*.slxc
+
+# Embedded (Arduino/PlatformIO)
+.pio/
+.pioenvs/
+.piolibdeps/
 
 # digital twins (honestly ignoring this entire folder for now)
 digital_twins/
